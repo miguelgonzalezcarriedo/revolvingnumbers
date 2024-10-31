@@ -1,0 +1,1 @@
+n, binary, revolving, gaussian, color

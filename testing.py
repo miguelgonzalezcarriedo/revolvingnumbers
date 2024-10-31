@@ -76,18 +76,22 @@ class PlotShower:
 
         # Sliders for scaling and origin positions
         self.base_real_slider = tk.Scale(controls_frame, from_=-1, to_=1, resolution=0.1, orient=tk.HORIZONTAL, label="Real Base", bg=self.root.cget('bg'), highlightthickness=0)
+        self.base_real_slider.set(1)  # Set default to 1
         self.base_real_slider.pack(side=tk.LEFT, padx=5)
 
         self.base_imaginary_slider = tk.Scale(controls_frame, from_=-1, to_=1, resolution=0.1, orient=tk.VERTICAL, label="Imaginary Base", bg=self.root.cget('bg'), highlightthickness=0)
+        self.base_imaginary_slider.set(1)  # Set default to 1
         self.base_imaginary_slider.pack(side=tk.LEFT, padx=5)
 
         self.angle_slider = tk.Scale(controls_frame, from_=-20, to_=20, resolution=1, orient=tk.VERTICAL, label="Angle pi/", bg=self.root.cget('bg'), highlightthickness=0)
+        self.angle_slider.set(2)  # Set default to 2
         self.angle_slider.pack(side=tk.LEFT, padx=5)
 
         self.term_limit_slider = tk.Scale(controls_frame, from_=1, to_=20, resolution=1, orient=tk.VERTICAL, label="Max Terms in Number", bg=self.root.cget('bg'), highlightthickness=0)
         self.term_limit_slider.pack(side=tk.LEFT, padx=5)
         
-        self.point_size_slider = tk.Scale(controls_frame, from_=.001, to_=10, resolution=0.001, orient=tk.VERTICAL, label="Point Size", bg=self.root.cget('bg'), highlightthickness=0)
+        self.point_size_slider = tk.Scale(controls_frame, from_=-5, to_=5, resolution=1, orient=tk.VERTICAL, label="Point Size", bg=self.root.cget('bg'), highlightthickness=0)
+        self.point_size_slider.set(0)  # Set default to 1
         self.point_size_slider.pack(side=tk.LEFT, padx=5)
         
         
@@ -205,7 +209,7 @@ class PlotShower:
         
         self.alpha = complex(self.base_real_slider.get(), self.base_imaginary_slider.get())
         self.denom = self.angle_slider.get()
-        self.point_size = self.point_size_slider.get()
+        self.point_size = 10 ** self.point_size_slider.get()
         if self.denom == 0:
             self.denom = .5
 
@@ -260,7 +264,10 @@ class PlotShower:
                 try:
                     self.image = Image.open(self.max_image_file_path)
                     # Convert the image to a format compatible with Tkinter
-                    self.image = self.image.resize((self.canvas.winfo_width(), self.canvas.winfo_height()), Image.LANCZOS)
+                    if self.canvas.winfo_width() < self.canvas.winfo_height():
+                        self.image = self.image.resize((self.canvas.winfo_width(), self.canvas.winfo_width()), Image.LANCZOS)
+                    else:
+                        self.image = self.image.resize((self.canvas.winfo_height(), self.canvas.winfo_height()), Image.LANCZOS)
                     self.tk_image = ImageTk.PhotoImage(self.image)  # Create a PhotoImage instance
                     # Display the image on the canvas
                     self.canvas.create_image(0, 0, anchor=tk.NW, image=self.tk_image)
@@ -318,7 +325,7 @@ class PlotShower:
         self.scatter.set_offsets(np.column_stack((self.x_data, self.y_data)))
         self.scatter.set_facecolor(self.colors)
         
-        plt.title(f"{self.number_direction} revolving numbers of angle π/{self.denom} and base alpha = {self.alpha.real} + {self.alpha.imag}i\n{self.n * abs(self.denom) * 2} numbers have been plotted to {self.places} terms")
+        plt.title(f"{self.number_direction} revolving numbers of angle π/{self.denom} and base = {self.alpha.real} + {self.alpha.imag}i\n{self.n * abs(self.denom) * 2} numbers have been plotted to {self.places} terms")
 
            
         # Redraw the canvas
@@ -365,8 +372,9 @@ class PlotShower:
         self.n += 1
         
         #the computer does not like it when alpha = 0 ... since then the gauss is infinity, so
-        if self.alpha == 0:
-            self.alpha = 0.0000000000000000000000000000001
+        MIN_ALPHA = 1e-30
+        if abs(self.alpha) < MIN_ALPHA:
+            self.alpha = complex(MIN_ALPHA, MIN_ALPHA)
 
         print(f"n = {self.n}")
 
@@ -446,7 +454,7 @@ class PlotShower:
             if abs(gaussian.real) >= self.window_boundary:
                 self.window_boundary = abs(gaussian.real)
             if abs(gaussian.imag) >= self.window_boundary:
-                self.window_boundary = abs(gaussian.imag)  
+                self.window_boundary = abs(gaussian.imag)
             
             # Write to the files
             with open(self.coords_file_path, 'a') as file:
@@ -462,21 +470,14 @@ class PlotShower:
             
         if self.subsequent_places > self.places:
             self.save_limited_image()
+            self.animate_construction()
             self.save_max_image()
         else:
             self.save_max_image()
                 
         if self.is_there_a_max_term_limit is False:
             self.load_image()
-            
-
-            
-
-
-                
-
-                
-            
+  
             
 if __name__ == "__main__":
     root = tk.Tk()
