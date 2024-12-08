@@ -10,6 +10,27 @@ body {
     margin-bottom: 20px;
     display: flex;
     gap: 20px;
+    align-items: flex-start;
+}
+
+#complexPlaneContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f5f5f5;
+}
+
+#complexPlane {
+    border: 1px solid #ccc;
+    background-color: white;
+}
+
+#complexValue {
+    margin-top: 5px;
+    font-family: monospace;
 }
 
 .slider-container {
@@ -18,18 +39,60 @@ body {
     align-items: center;
 }
 
-canvas {
+canvas#plotCanvas {
     border: 1px solid #ccc;
 }
 
 #equations {
     margin: 20px 0;
     text-align: center;
-    min-height: 80px;  /* Prevent layout shift during rendering */
+    min-height: 80px;
 }
 
 #info {
     margin: 10px 0;
     font-size: 14px;
     font-family: Arial, sans-serif;
+}
+
+#angleContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f5f5f5;
+}
+
+#angleSelector {
+    border: 1px solid #ccc;
+    background-color: white;
+}
+
+#angleValue {
+    margin-top: 5px;
+    font-family: monospace;
+}
+
+.coordinate-input {
+    margin-top: 10px;
+    padding: 5px;
+    width: 100px;
+    text-align: center;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-family: monospace;
+}
+
+.coordinate-input:focus {
+    outline: none;
+    border-color: #2d70b3;
+    box-shadow: 0 0 0 2px rgba(45, 112, 179, 0.2);
+}
+
+#symbolic-equations {
+    margin: 20px 0;
+    text-align: center;
+    font-size: 1.2em;
 } 

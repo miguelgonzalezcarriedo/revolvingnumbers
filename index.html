@@ -7,22 +7,24 @@
     <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 </head>
 <body>
+    <div id="symbolic-equations">
+        \[
+            \begin{cases}
+            f_1(z) = \alpha z \\
+            f_2(z) = \alpha e^{\theta i}z + \alpha
+            \end{cases}
+        \]
+    </div>
+    
     <div class="controls">
-        <div class="slider-container">
-            <label>Real Base</label>
-            <input type="range" id="baseReal" min="-1" max="1" step="0.05" value="0.5">
-            <span id="baseRealValue">0.5</span>
+        <div id="complexPlaneContainer">
+            <label for="complexPlane">Complex Number Selector</label>
+            <canvas id="complexPlane" width="300" height="300"></canvas>
         </div>
         
-        <div class="slider-container">
-            <label>Imaginary Base</label>
-            <input type="range" id="baseImaginary" min="-1" max="1" step="0.05" value="-0.5">
-            <span id="baseImaginaryValue">-0.5</span>
-        </div>
-        
-        <div class="slider-container">
-            <label>Angle (π/n)</label>
-            <input type="range" id="angle" min="-20" max="20" step="1" value="2">
+        <div id="angleContainer">
+            <label for="angleSelector">Angle Selector (π/n)</label>
+            <canvas id="angleSelector" width="300" height="300"></canvas>
             <span id="angleValue">2</span>
         </div>
     </div>
