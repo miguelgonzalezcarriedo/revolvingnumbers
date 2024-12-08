@@ -3,6 +3,9 @@ import os
 import numpy as np
 import keyboard
 import sys
+import matplotlib.pyplot as plt
+import io
+from PIL import Image
 
 
 class FractalSimulator:
@@ -191,8 +194,6 @@ class FractalSimulator:
             self.colors.append(color)
             
         np.savez(self.data_file_path, x_data=self.x_data, y_data=self.y_data, colors=self.colors, n=self.n, window_boundary = self.window_boundary)
-            
-            
             
     def generate_all_data(self):
         self.current_places = 1

@@ -3,6 +3,9 @@ import os
 import numpy as np
 import keyboard
 import sys
+import matplotlib.pyplot as plt
+import io
+from PIL import Image
 
 
 class FractalSimulator:
@@ -33,6 +36,12 @@ class FractalSimulator:
         self.colors = []
 
         
+
+        # Add visualization initialization from VisualizationCreator
+        self.fig, self.ax = plt.subplots(figsize=(6, 6))
+        self.scatter = self.ax.scatter([], [], s=1)  # Initialize empty scatter plot
+        plt.xlim(-2, 2)
+        plt.ylim(-2, 2)
 
     def clear_points(self):
         # Explicitly clear lists to help garbage collection
@@ -191,11 +200,65 @@ class FractalSimulator:
             self.colors.append(color)
             
         np.savez(self.data_file_path, x_data=self.x_data, y_data=self.y_data, colors=self.colors, n=self.n, window_boundary = self.window_boundary)
+
+    def draw_points(self):
+        plt.xlim(-self.window_boundary, self.window_boundary)  # Set limits as needed
+        plt.ylim(-self.window_boundary, self.window_boundary)  # Set limits as needed   
+
+        self.scatter.set_offsets(np.column_stack((self.x_data, self.y_data)))
+        self.scatter.set_facecolor(self.colors)
+
+        plt.title(f"{self.number_direction} revolving numbers of angle π/{self.denom} and base {self.alpha.real} + {self.alpha.imag}i\n{int(((2 ** self.places) - 1) * self.number_of_deltas)} numbers have been plotted to {self.places} terms")
+
+        self.fig.canvas.draw()
+
+    def save_max_image(self):
+        max_image_file_path = os.path.join('visualizations', self.number_direction, self.angle_folder, self.base_folder, 'figureMax.png')
+        try:
+            self.fig.savefig(max_image_file_path)
+            print(f"Image saved as {max_image_file_path}")
+        except Exception as e:
+            print(f"Error saving image: {e}")
+
+    def animate_construction(self):
+        frames = []
+        for p in range(self.places):
+            # Summon the data
+            x_data = self.x_data[:int(((2 ** p) - 1) * self.number_of_deltas)]
+            y_data = self.y_data[:int(((2 ** p) - 1) * self.number_of_deltas)]
+            colors = self.colors[:int(((2 ** p) - 1) * self.number_of_deltas)]
+            
+            # Update scatter plot with new data and color
+            self.scatter.set_offsets(np.column_stack((x_data, y_data)))
+            self.scatter.set_facecolor(colors)
+            
+            plt.title(f"{self.number_direction} revolving numbers of angle π/{self.denom} and base = {self.alpha.real} + {self.alpha.imag}i\n{int(((2 ** p) - 1) * self.number_of_deltas)} numbers have been plotted to {p} terms")
+
+            # Redraw the canvas
+            self.fig.canvas.draw()
+
+            # Save the figure to a BytesIO object
+            buf = io.BytesIO()
+            self.fig.savefig(buf, format='png')
+            buf.seek(0)
+            frames.append(Image.open(buf))
+
+        # Create a GIF from the images in memory
+        animated_construction_file_path_writing = os.path.join('visualizations', self.number_direction, self.angle_folder, self.base_folder, "animatedConstruction.gif")
+        
+        os.makedirs(os.path.dirname(animated_construction_file_path_writing), exist_ok=True)
+
+        frames[0].save(animated_construction_file_path_writing, save_all=True, append_images=frames[1:], duration=500, loop=0)
+        print(f"GIF saved as {animated_construction_file_path_writing}")
+
+        # Close all frames to free memory
+        for frame in frames:
+            frame.close()
             
             
             
     def generate_all_data(self):
-        self.current_places = 10
+        self.current_places = 11
         try:
             while True:
                 for self.denom in np.arange(-6, 7, 1):
@@ -227,6 +290,8 @@ class FractalSimulator:
                                     while True:
                                         self.generate_next_number()
                                         if self.subsequent_places > self.places:
+                                            self.draw_points()
+                                            self.save_max_image()
                                             print(f"for {self.number_direction} direction, angle pi/{self.denom}, base {self.alpha.real} + {self.alpha.imag}i, {self.n} is the last number with {self.places} terms")
                                             break
 
