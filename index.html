@@ -7,34 +7,40 @@
     <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 </head>
 <body>
-    <div class="left-panel">
-        <div id="symbolic-equations">
-            \[
-                \begin{cases}
-                f_1(z) = \alpha z \\
-                f_2(z) = \alpha e^{\theta i}z + \alpha
-                \end{cases}
-            \]
-        </div>
-        
-        <div class="controls">
-            <div id="complexPlaneContainer">
-                <label for="complexPlane">Complex Number Selector</label>
-                <canvas id="complexPlane" width="300" height="300"></canvas>
+    <nav class="navbar">
+        <h1>Transformations in the Complex Plane</h1>
+    </nav>
+    
+    <div class="content">
+        <div class="left-panel">
+            <div id="symbolic-equations">
+                \[
+                    \begin{cases}
+                    f_1(z) = \alpha z \\
+                    f_2(z) = \alpha e^{\theta i}z + \alpha
+                    \end{cases}
+                \]
             </div>
             
-            <div id="angleContainer">
-                <label for="angleSelector">Angle Selector (π/n)</label>
-                <canvas id="angleSelector" width="300" height="300"></canvas>
-                <span id="angleValue">2</span>
+            <div class="controls">
+                <div id="complexPlaneContainer">
+                    <label for="complexPlane">Complex Number Selector</label>
+                    <canvas id="complexPlane" width="300" height="300"></canvas>
+                </div>
+                
+                <div id="angleContainer">
+                    <label for="angleSelector">Angle Selector (π/n)</label>
+                    <canvas id="angleSelector" width="300" height="300"></canvas>
+                    <span id="angleValue">2</span>
+                </div>
             </div>
         </div>
-    </div>
-    
-    <div class="right-panel">
-        <div id="equations"></div>
-        <div id="info"></div>
-        <canvas id="plotCanvas"></canvas>
+        
+        <div class="right-panel">
+            <div id="equations"></div>
+            <div id="info"></div>
+            <canvas id="plotCanvas"></canvas>
+        </div>
     </div>
     
     <script src="script.js"></script>
