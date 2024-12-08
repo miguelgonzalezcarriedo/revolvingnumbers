@@ -1,57 +1,36 @@
+<!DOCTYPE html>
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Image Visualizer</title>
+    <title>Complex Transformations Visualizer</title>
     <link rel="stylesheet" href="styles.css">
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&amp;display=swap" rel="stylesheet">
-    <link rel="icon" href="visualizations/contracting/angle=piDividedBy2/alpha=1.0+1.0i/figureMax.png">
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 </head>
-<body style="background-color: rgb(116, 103, 173);">
-    <header style="background-color: rgb(151, 127, 240); border-bottom-color: rgb(49, 0, 46); border-top-color: rgb(60, 78, 14);">
-        <h1>Visualizing Revolving Fractals</h1>
-    </header>
-    
-    <p style="text-align: center; font-size: 1.2em; margin: 10px 0;">
-        📐 Select a combination of angle and base below 🔍
-    </p>
-    
-    <div id="controls" style="background-color: rgb(184, 121, 111); border-color: rgb(53, 24, 34);">
-        <label for="angle">
-            <span>Angle =</span>
-            <span style="display: inline-block; vertical-align: middle;">
-                <span>π</span>
-                <span style="display: block; text-align: center; border-top: 1px solid;"> 
-                    <span id="angleValue">2</span>
-                </span>
-            </span>
-        </label>
-        <input type="range" id="angle" min="-6" max="6" step="1" value="2">
+<body>
+    <div class="controls">
+        <div class="slider-container">
+            <label>Real Base</label>
+            <input type="range" id="baseReal" min="-1" max="1" step="0.05" value="0.5">
+            <span id="baseRealValue">0.5</span>
+        </div>
         
-        <button id="toggleDirection">Show Expanding</button>
-        <button id="saveImage">Save Image</button>
-    </div>
-    
-    <div id="canvasContainer" style="background-color: rgb(240, 134, 203); border-color: rgb(62, 40, 45);">
-        <div id="complexPlaneContainer" style="background-color: rgb(123, 253, 196); border-color: rgb(93, 85, 26);">
-            <label for="complexPlane">Expansion Base</label>
-            <canvas id="complexPlane" width="300" height="300" style="border-color: rgb(97, 64, 31);"></canvas>
-            <span id="complexValue" style="position: absolute; top: 66px; left: 355px;">1.00 + 1.00i</span>
+        <div class="slider-container">
+            <label>Imaginary Base</label>
+            <input type="range" id="baseImaginary" min="-1" max="1" step="0.05" value="-0.5">
+            <span id="baseImaginaryValue">-0.5</span>
         </div>
-        <div id="visualizationContainer" style="background-color: rgb(156, 251, 138); border-color: rgb(36, 36, 49);">
-            <label for="visualization">Scatter Plot</label>
-            <img id="visualization" alt="Visualization not found (yet)" style="border-color: rgb(96, 6, 68);" src="visualizations/contracting/angle=piDividedBy2/alpha=1.0+1.0i/figureMax.png">
+        
+        <div class="slider-container">
+            <label>Angle (π/n)</label>
+            <input type="range" id="angle" min="-20" max="20" step="1" value="2">
+            <span id="angleValue">2</span>
         </div>
     </div>
     
-    <div id="imageContainer" style="display: flex; justify-content: center; flex-wrap: wrap; margin-top: 20px; background-color: rgb(196, 209, 134); border-color: rgb(26, 35, 77);">
-        <img src="unit_circle_animation.gif" alt="Unit Circle Animation" class="responsive-image" style="border: 2px solid rgb(14, 16, 57);">
-        <img src="Slide13.png" alt="Slide 13" class="responsive-image" style="border: 2px solid rgb(9, 66, 97);">
-        <img src="Slide15.png" alt="Slide 15" class="responsive-image" style="border: 2px solid rgb(96, 22, 80);">
-    </div>
-    
-    <footer style="background-color: rgb(150, 111, 211); border-top-color: rgb(53, 14, 39); border-bottom-color: rgb(20, 18, 39);">
-        <p>University of North Texas - Fractal Research Group - 2024</p>
-    </footer>
+    <div id="equations"></div>
+    <div id="info"></div>
+    <canvas id="plotCanvas"></canvas>
     
     <script src="script.js"></script>
 </body>
+</html> 

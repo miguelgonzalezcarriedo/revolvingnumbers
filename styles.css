@@ -1,155 +1,35 @@
 body {
-    font-family: 'Cambria Math', 'STIX Two Math', serif;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
     margin: 0;
     padding: 20px;
-    background-color: #f0f8ff;
-}
-
-header, footer {
-    width: 100%;
-    text-align: center;
-    background-color: #ffebcd;
-    padding: 10px 0;
-    border-bottom: 3px solid #ff69b4;
-    border-top: 3px solid #ff69b4;
-    color: #000;
-}
-
-footer {
-    border-top: 3px solid #ff69b4;
-    margin-top: 20px;
-}
-
-#controls {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    margin-bottom: 20px;
-    background-color: #e0ffff;
-    padding: 10px;
-    border-radius: 10px;
-    border: 2px dashed #ff4500;
-}
-
-#controls label, #controls input, #controls button {
-    margin: 5px;
-    color: #000;
-}
-
-#canvasContainer {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 80%;
-    border: 2px solid #32cd32;
-    position: relative;
-    flex-wrap: wrap;
-    background-color: #fafad2;
-    padding: 15px;
-    border-radius: 15px;
-}
-
-#complexPlaneContainer, #visualizationContainer {
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin: 10px;
-    max-width: 100%;
-    background-color: #ffe4e1;
-    padding: 10px;
-    border-radius: 10px;
-    border: 2px solid #8a2be2;
 }
 
-#complexPlane, #visualization {
-    width: 100%;
-    max-width: 300px;
-    height: auto;
-    border: 2px solid #ff6347;
-    background-color: #f0f0f0;
-}
-
-#complexValue {
-    background-color: rgba(255, 255, 255, 0.8);
-    padding: 2px 5px;
-    border-radius: 3px;
-    font-size: 14px;
-    color: #000;
-    pointer-events: none;
-}
-
-@media (max-width: 600px) {
-    #canvasContainer {
-        flex-direction: column;
-    }
-}
-
-#controls label {
+.controls {
+    margin-bottom: 20px;
     display: flex;
+    gap: 20px;
+}
+
+.slider-container {
+    display: flex;
+    flex-direction: column;
     align-items: center;
 }
 
-#controls label span {
-    margin: 0 5px;
+canvas {
+    border: 1px solid #ccc;
 }
 
-#controls label span span {
-    display: block;
+#equations {
+    margin: 20px 0;
     text-align: center;
+    min-height: 80px;  /* Prevent layout shift during rendering */
 }
 
-header h1 {
-    font-family: 'Cinzel', serif;
-    position: relative;
-    display: inline-block;
-    padding: 0 20px;
-}
-
-header h1::before,
-header h1::after {
-    content: '';
-    position: absolute;
-    top: 50%;
-    width: 50px;
-    height: 2px;
-    background-color: #000;
-    transform: translateY(-50%);
-}
-
-header h1::before {
-    left: -70px;
-}
-
-header h1::after {
-    right: -70px;
-}
-
-#imageContainer {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-wrap: wrap;
-    background-color: #f0f8ff; /* Default color, will be overridden by JS */
-    padding: 10px;
-    border-radius: 10px;
-    margin-top: 20px;
-    width: 80%;
-    border: 2px solid #000; /* Default border color */
-}
-
-.responsive-image {
-    max-width: 30%;
-    height: auto;
-    margin: 10px;
-    flex: 1 1 30%; /* Flex-grow, flex-shrink, flex-basis */
-}
-
-@media (max-width: 600px) {
-    .responsive-image {
-        max-width: 100%;
-        flex: 1 1 100%;
-    }
-}
+#info {
+    margin: 10px 0;
+    font-size: 14px;
+    font-family: Arial, sans-serif;
+} 
